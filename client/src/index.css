@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Open+Sans:wght@300&family=Outfit:wght@100..900&family=Poppins:ital,wght@1,900&family=Prata&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: Outfit;
+}
+@layer base{
+    html {
+        scroll-behavior: smooth;
+    }
+}
+::-webkit-scrollbar{
+    display: none;
+}
+.rich-text p{
+    margin-bottom: 16px;
+}
