@@ -5,11 +5,14 @@ import Loading from './../../components/student/Loading';
 import { assets } from '../../assets/assets';
 import humanizeDuration from 'humanize-duration';
 import Footer from '../../components/student/Footer';
+import Youtube from 'react-youtube'
+
 const CourseDetails = () => {
   const {id}=useParams();
   const [courseData,setCourseData]=useState(null);
   const [openSection,setOpenSection]=useState({});
   const [isAlreadyEnrolled,setIsAlreadyEnrolled]=useState(false);
+  const [playerData,setPlayerData]=useState(null);
   const {allCourses,calculateRating,calculateChapterTime,calculateCourseDuration,calculateNoOfLectures,currency}=useContext(AppContext);
   const fetchCourseData=async () => {
     const findCourse=await allCourses.find(course=>course._id===id);
@@ -17,13 +20,14 @@ const CourseDetails = () => {
   }
   useEffect(()=>{
     fetchCourseData();
-  },[]);
+  },[allCourses]);
 
   const toogleSection=(index)=>{
     setOpenSection((prev)=>(
       {...prev,[index]:!prev[index]}
     ))
   }
+
   return courseData ? (
     <>
     <div className='flex md:flex-row flex-col-reverse gap-10 relative items-start justify-between md:px-36 px-8 md:pt-30 pt-20 text-left'>
@@ -61,14 +65,14 @@ const CourseDetails = () => {
                               <div  className={`overflow-hidden transition-all duration-300 ${openSection[index] ? 'max-h-96' : 'max-h-0'}`}>
                                 <ul className='list-disc md:pl-10 pl-4 pr-4 py-2 text-gray-600 border-t border-gray-300'>
                                   {
-                                    chapter.chapterContent.map((lecture,index)=>(
-                                      <li key={index} className='flex items-start gap-2 py-1'>
+                                    chapter.chapterContent.map((lecture,i)=>(
+                                      <li key={i} className='flex items-start gap-2 py-1'>
                                         <img src={assets.play_icon} alt="" className='w-4 h-4 mt-1'/>
                                         <div className='flex items-center justify-between w-full text-gray-800 text-xs md:text-default'>
                                           <p>{lecture.lectureTitle}</p>
                                           <div className='flex gap-2'>
                                             {
-                                              lecture.isPreviewFree && <p className='text-blue-500 cursor-pointer'>Preview</p>
+                                              lecture.isPreviewFree && <p onClick={()=>setPlayerData({videoId:lecture.lectureUrl.split('/').pop()})} className='text-blue-500 cursor-pointer'>Preview</p>
                                             }
                                             <p>
                                               {
@@ -94,7 +98,11 @@ const CourseDetails = () => {
       </div>
       {/* right column */}
       <div className='max-w-course-card z-10  shadow-custom-card rounded-t md:rounded-none overflow-hidden bg-white min-w-[300px] sm:min-w-[420px]'>
-        <img src={courseData.courseThumbnail} alt="" />
+        {
+             playerData?
+             <Youtube videoId={playerData.videoId} opts={{playerVars:{autoplay:1}}} iframeClassName='w-full aspect-video'/>
+             : <img src={courseData.courseThumbnail} alt="" />
+        }
         <div className='p-5'>
             <div className='flex items-center gap-2'>
               <img src={assets.time_left_clock_icon} alt="" className='w-3.5'/>
@@ -126,7 +134,7 @@ const CourseDetails = () => {
               <p className='md:text-xl text-lg font-medium text-gray-800'>What's in the course?</p>
               <ul className='ml-4 pt-2 text-sm md:text-default list-disc text-gray-500'>
                 <li>Lifetime access with free updates.</li>
-                <li>Step-by-strp, hands-on project guidance.</li>
+                <li>Step-by-step, hands-on project guidance.</li>
                 <li>Downloadable resources and source code</li>
                 <li>Quizzes to test your knowledge.</li>
                 <li>Certificate of completion.</li>
