@@ -8,7 +8,7 @@ const Footer = () => {
         <img src={assets.logo} alt="" className='hidden md:block w-20'/>
         <div className='hidden md:block h-7 w-px bg-gray-500/60'></div>
         <p className='py-4 text-center text-xs md:text-sm text-gray-500'>
-          Copyright 2024 @ Bhola Paul. All Right Reserved. 
+          Copyright 2025 @ Bhola Paul. All Right Reserved. 
         </p>
       </div>
       <div className='flex items-center gap-3 max-md:mt-4'>
