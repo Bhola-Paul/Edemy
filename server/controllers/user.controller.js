@@ -8,7 +8,6 @@ import { CourseProgress } from "../models/courseProgress.model.js";
 export const getUserData=async (req,res) => {
     try {
         const userId=req.auth.userId;
-        // console.log(userId);
         const user = await User.findById(userId);
         if(!user){
             return res.json({success:false,message: 'User not found'});
@@ -23,7 +22,7 @@ export const getUserData=async (req,res) => {
 export const userEnrolledCourses=async (req,res) => {
     try {
         const userId=req.auth.userId;
-        const userData = await User.findById(userId).populate('EnrolledCourses');
+        const userData = await User.findById(userId).populate('enrolledCourses');
         res.json({success:true,enrolledCourses: userData.enrolledCourses});
     } catch (error) {
         res.json({success:false,message:error.message});

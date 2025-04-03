@@ -9,7 +9,7 @@ export const updateRoleToEducator=async (req,res)=>{
         const userId=req.auth.userId;
         console.log(userId);
         await clerkClient.users.updateUserMetadata(userId,{
-            privateMetadata:{
+            publicMetadata:{
                 role: 'educator',
             }
         })
