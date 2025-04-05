@@ -12,7 +12,7 @@ const StudentsEnrolled = () => {
     // setEnrolledStudents(dummyStudentEnrolled);
     try {
       const token = await getToken();
-      const {data} = await axios.get(backendUrl+'/api/educator//enrolled-students',{headers:{Authorization: `Bearer ${token}`}});
+      const {data} = await axios.get(backendUrl+'/api/educator/enrolled-students',{headers:{Authorization: `Bearer ${token}`}});
       if(data.success){
         setEnrolledStudents(data.enrolledStudents.reverse());
       }
