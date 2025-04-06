@@ -63,7 +63,7 @@ export const educatorDashboardData = async (req,res) => {
 
         //calculate total earnings from purchases
         const purchases=await Purchase.find({courseId:{$in:courseIds},status: 'completed'});
-        const totalEarnings=purchases.reduce((sum,purchase)=>sum+purchase.amount,0);
+        const totalEarnings=purchases.reduce((sum,purchase)=>sum+purchase.amount,0).toFixed(2);
 
         //collect unique enrolled student Ids with their course titles
         const enrolledStudentsData=[];
