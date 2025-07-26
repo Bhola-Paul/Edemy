@@ -7,6 +7,8 @@ import Course from "../models/course.model.js";
 //api controller to manage clerk user with db
 export const clerkWebhooks=async (req,res) => {
     try {
+        console.log('Hello');
+        
         const whook=new Webhook(process.env.CLERK_WEBHOOK_SECRET);
         await whook.verify(JSON.stringify(req.body),{
             "svix-id":req.headers["svix-id"],

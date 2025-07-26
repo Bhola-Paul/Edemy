@@ -73,7 +73,8 @@ export const purchaseCourse=async (req,res) => {
                 purchaseId: newPurchase._id.toString()
             }
         })
-
+        purchaseData.status = 'completed';
+        // await purchaseData.save();
         res.json({success:true, session_url: session.url});
 
     } catch (error) {
